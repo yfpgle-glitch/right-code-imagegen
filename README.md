@@ -16,29 +16,18 @@
 
 ## 安装 Skill
 
-需要 Python 3。没有的话，可以直接让当前工具帮你安装。
+需要 Python 3。没有的话，可以直接让 Codex、Claude Code 或 WorkBuddy 帮你安装。
 
-### Codex
+### Codex / Claude Code
 
-把这句话发给 Codex：
+把这句话发给 Codex 或 Claude Code：
 
 ```text
 请安装这个 Skill：
 https://github.com/yfpgle-glitch/right-code-imagegen/tree/main/skills/right-code-imagegen
 ```
 
-安装后，新建一个 Codex 任务。
-
-### Claude Code
-
-把这句话发给 Claude Code：
-
-```text
-请安装这个 Skill 到 ~/.claude/skills/right-code-imagegen：
-https://github.com/yfpgle-glitch/right-code-imagegen/tree/main/skills/right-code-imagegen
-```
-
-如果当前会话没有识别，重新启动 Claude Code。
+安装后，如果没有识别，重新打开一个任务或会话。
 
 ### WorkBuddy
 

@@ -16,29 +16,18 @@
 
 ## Install the Skill
 
-Python 3 is required. If it is missing, ask the current tool to install it.
+Python 3 is required. If it is missing, ask Codex, Claude Code, or WorkBuddy to install it.
 
-### Codex
+### Codex / Claude Code
 
-Send this message to Codex:
+Send this message to Codex or Claude Code:
 
 ```text
 Install this Skill:
 https://github.com/yfpgle-glitch/right-code-imagegen/tree/main/skills/right-code-imagegen
 ```
 
-After installation, start a new Codex task.
-
-### Claude Code
-
-Send this message to Claude Code:
-
-```text
-Install this Skill at ~/.claude/skills/right-code-imagegen:
-https://github.com/yfpgle-glitch/right-code-imagegen/tree/main/skills/right-code-imagegen
-```
-
-Restart Claude Code if the current session does not detect it.
+After installation, open a new task or session if the Skill is not detected.
 
 ### WorkBuddy
 

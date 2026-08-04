@@ -1,10 +1,18 @@
-# Right Code ImageGen for Codex
+<div align="center">
 
-[中文](README.md)
+# Right Code ImageGen
 
-Use Right Code to generate or edit images in Codex.
+**Generate and edit images in Codex with Right Code**
 
-GitHub repository: [yfpgle-glitch/right-code-imagegen](https://github.com/yfpgle-glitch/right-code-imagegen)
+![Codex Skill](https://img.shields.io/badge/Codex-Skill-202124?style=flat-square)
+![Provider](https://img.shields.io/badge/provider-Right%20Code-2563EB?style=flat-square)
+![Model](https://img.shields.io/badge/model-gpt--image--2-16A34A?style=flat-square)
+
+[GitHub repository](https://github.com/yfpgle-glitch/right-code-imagegen) · [中文](README.md) · English
+
+</div>
+
+---
 
 ## Install
 
@@ -21,15 +29,13 @@ After installation, start a new Codex task.
 
 ### 2. Create an API key
 
-1. [Register with Right Code](https://www.rightapi.ai/register?aff=9ec111f0) and sign in.
+1. [Register with Right Code](https://www.rightapi.ai/register?aff=9ec111f0) and sign in. (Register through this link to receive 5% extra credit on every top-up.)
 2. Open **Token Management**.
 3. Select **Create Key**.
 
-**Register through this link to receive 5% extra credit on every top-up.**
-
 For more help, read the [official Right Code API key guide](https://docs.rightapi.ai/docs/rc_quick_start/apikey.html).
 
-### 3. Save the API key
+### 3. Configure the API key
 
 Tell Codex:
 
@@ -37,25 +43,7 @@ Tell Codex:
 Configure my Right Code API key.
 ```
 
-Codex will open a hidden input box. Paste the API key and confirm.
-
-The key is saved at:
-
-```text
-~/.config/right-code/api_key
-```
-
-The key is hidden while you type. Do not send it in a chat or upload it to GitHub.
-
-### 4. Check the setup
-
-Tell Codex:
-
-```text
-Check my Right Code configuration.
-```
-
-This only checks whether the key is saved. It does not generate an image or incur an image-generation charge.
+Codex will open a hidden input box. Paste the API key and confirm. The key is hidden while you type.
 
 ## Use the Skill
 

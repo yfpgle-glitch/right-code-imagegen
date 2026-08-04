@@ -1,10 +1,18 @@
-# Right Code ImageGen for Codex
+<div align="center">
 
-[English](README_EN.md)
+# Right Code ImageGen
 
-使用 Right Code 在 Codex 里生成或修改图片。
+**在 Codex 中使用 Right Code 生成和修改图片**
 
-GitHub 仓库：[yfpgle-glitch/right-code-imagegen](https://github.com/yfpgle-glitch/right-code-imagegen)
+![Codex Skill](https://img.shields.io/badge/Codex-Skill-202124?style=flat-square)
+![Provider](https://img.shields.io/badge/provider-Right%20Code-2563EB?style=flat-square)
+![Model](https://img.shields.io/badge/model-gpt--image--2-16A34A?style=flat-square)
+
+[GitHub 仓库](https://github.com/yfpgle-glitch/right-code-imagegen) · 中文 · [English](README_EN.md)
+
+</div>
+
+---
 
 ## 安装
 
@@ -21,15 +29,13 @@ https://github.com/yfpgle-glitch/right-code-imagegen/tree/main/skills/right-code
 
 ### 2. 创建 API Key
 
-1. [注册 Right Code](https://www.rightapi.ai/register?aff=9ec111f0) 并登录。
+1. [注册 Right Code](https://www.rightapi.ai/register?aff=9ec111f0) 并登录。（使用此链接注册，每次充值均可赠送 5% 额外额度。）
 2. 打开“令牌管理”。
 3. 点击“创建密钥”。
 
-**使用此链接注册，每次充值均可赠送 5% 额外额度。**
-
 不知道怎么操作，可以查看 [Right Code 官方 API Key 教程](https://docs.rightapi.ai/docs/rc_quick_start/apikey.html)。
 
-### 3. 保存 API Key
+### 3. 配置 API Key
 
 对 Codex 说：
 
@@ -37,25 +43,7 @@ https://github.com/yfpgle-glitch/right-code-imagegen/tree/main/skills/right-code
 帮我配置 Right Code API Key。
 ```
 
-Codex 会打开一个隐藏输入框。粘贴 API Key，然后确认。
-
-Key 会保存在：
-
-```text
-~/.config/right-code/api_key
-```
-
-输入时不会显示 Key。不要把 Key 发到聊天里，也不要上传到 GitHub。
-
-### 4. 检查配置
-
-对 Codex 说：
-
-```text
-检查一下 Right Code 配置。
-```
-
-这一步只检查 Key 是否已经保存，不会生成图片，也不会产生生图费用。
+Codex 会打开一个隐藏输入框。粘贴 API Key，然后确认。输入时不会显示 Key。
 
 ## 使用
 

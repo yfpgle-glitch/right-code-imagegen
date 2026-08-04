@@ -1,6 +1,6 @@
 ---
 name: right-code-imagegen
-description: Generate or edit images through Right Code's asynchronous draw API, save the original image files locally, and display them in Codex. Use when the user explicitly asks for Right Code, rightapi.ai, right.codes, nano-banana, gpt-image through Right Code, or the Right Code draw endpoint; do not use when the user asks for Codex's built-in image generator or another provider.
+description: Configure a Right Code API key, generate or edit images through Right Code's asynchronous draw API, save original image files locally, and display them in Codex. Use when the user asks to set up or check Right Code authentication, or explicitly requests Right Code, rightapi.ai, right.codes, nano-banana, gpt-image through Right Code, or the Right Code draw endpoint; do not use when the user asks for Codex's built-in image generator or another provider.
 ---
 
 # Right Code Image Generation
@@ -8,6 +8,15 @@ description: Generate or edit images through Right Code's asynchronous draw API,
 Use the bundled client for the complete submit, poll, decode, download, and checkpoint flow. Do not rebuild the API sequence with ad-hoc commands.
 
 Default to model `gpt-image-2`, aspect ratio `16:9`, and resolution `1K` unless the user explicitly requests different values.
+
+## Configure the API key
+
+When the user asks to configure or check Right Code authentication:
+
+1. If they do not have an account or API key, direct them to `https://www.rightapi.ai/register?aff=9ec111f0`. State that the URL contains an affiliate parameter. Ask them to register and create an API key in Right Code before continuing.
+2. Do not ask the user to paste the API key into the conversation. Run `python3 scripts/configure_api_key.py`. On macOS this opens a local hidden-input dialog; in an interactive terminal it uses a hidden prompt.
+3. After configuration, run `python3 scripts/configure_api_key.py --check`. Report only the status and saved path. Never print, repeat, log, or embed the key in a command.
+4. Do not make a paid image request merely to verify configuration. Explain that the first real generation is the paid verification step.
 
 ## Workflow
 

@@ -1,67 +1,77 @@
 # Right Code ImageGen Skill for Codex
 
-A standalone Codex Skill for generating and editing images through Right Code's asynchronous image API.
+通过 Right Code 在 Codex 中生成和编辑图片。支持文生图、参考图编辑、多图任务、断点恢复和原图下载。
 
-It supports text-to-image, reference-image editing, sequential multi-image requests, resumable polling, local task checkpoints, and original-file downloads. This is an independent community project and is not affiliated with Right Code or OpenAI.
+## 三分钟安装
 
-## Install
+### 1. 让 Codex 安装 Skill
 
-Ask Codex to install the Skill from this repository:
+把下面这句话发给 Codex：
 
 ```text
-Install the right-code-imagegen Skill from yfpgle-glitch/right-code-imagegen,
-using the path skills/right-code-imagegen.
+请安装 yfpgle-glitch/right-code-imagegen 仓库中
+skills/right-code-imagegen 这个 Skill。
 ```
 
-Or install it manually:
+安装完成后，新建一个 Codex 任务。
+
+### 2. 注册 Right Code 并创建 API Key
+
+[注册 Right Code 并创建 API Key](https://www.rightapi.ai/register?aff=9ec111f0)
+
+> 说明：上面的注册链接包含推广参数。注册后，请在 Right Code 后台创建 API Key。
+
+### 3. 让 Codex 帮你配置 Key
+
+不用手动创建配置文件。直接对 Codex 说：
+
+```text
+帮我配置 Right Code API Key。
+```
+
+Codex 会打开本地隐藏输入框。把 API Key 粘贴到输入框并确认即可。Key 会保存在：
+
+```text
+~/.config/right-code/api_key
+```
+
+API Key 不会显示在终端输出中。为了安全，不要把 Key 直接发送到聊天记录、GitHub 或其他公开位置。
+
+### 4. 检查配置
+
+对 Codex 说：
+
+```text
+检查一下 Right Code 配置。
+```
+
+这个检查不会调用生图接口，也不会产生生图费用。第一次实际生成图片时才会提交 Right Code 任务。
+
+## 开始使用
+
+你可以直接对 Codex 说：
+
+- `使用 Right Code 生成一张电影感的 16:9 图片。`
+- `使用 Right Code 编辑这张参考图。`
+- `使用 Right Code 生成三种不同方案。`
+- `继续处理 Right Code 任务 task_example。`
+
+默认模型为 `gpt-image-2`，默认比例为 `16:9`，默认分辨率为 `1K`。生成多张图片会创建多个独立任务，可能产生多次费用。
+
+## 手动配置（可选）
+
+如果你更喜欢使用终端：
 
 ```bash
-git clone https://github.com/yfpgle-glitch/right-code-imagegen.git
-mkdir -p ~/.codex/skills
-cp -R right-code-imagegen/skills/right-code-imagegen ~/.codex/skills/right-code-imagegen
+python3 ~/.codex/skills/right-code-imagegen/scripts/configure_api_key.py
+python3 ~/.codex/skills/right-code-imagegen/scripts/configure_api_key.py --check
 ```
 
-Start a new Codex task after installation so the Skill is discovered.
-
-## Configure the API key
-
-Set the key for the current process:
-
-```bash
-export RIGHT_CODES_API_KEY="your-api-key"
-```
-
-Or store it locally:
-
-```bash
-mkdir -p ~/.config/right-code
-chmod 700 ~/.config/right-code
-printf '%s' "your-api-key" > ~/.config/right-code/api_key
-chmod 600 ~/.config/right-code/api_key
-```
-
-Never commit the API key or paste it into a Codex conversation.
-
-## Use
-
-Examples:
-
-- `Use Right Code to generate a cinematic 16:9 image.`
-- `Use Right Code to edit this reference image.`
-- `Use Right Code to generate three independent variations.`
-- `Resume Right Code task task_example.`
-
-The default model is `gpt-image-2`, the default aspect ratio is `16:9`, and the default resolution is `1K`. Multiple outputs are submitted as independent single-image tasks because the provider returns one image per task.
-
-## Development
-
-Run the offline unit tests:
+## 开发与测试
 
 ```bash
 python3 -m unittest discover skills/right-code-imagegen/tests
 ```
-
-Validate the Skill with Codex's `skill-creator` validator before publishing a release.
 
 ## License
 

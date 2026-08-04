@@ -2,9 +2,9 @@
 
 # Right Code ImageGen
 
-**Generate and edit images in Codex with Right Code**
+**Generate and edit images with Right Code in Codex, Claude Code, and WorkBuddy**
 
-![Codex Skill](https://img.shields.io/badge/Codex-Skill-202124?style=flat-square)
+![Agents](https://img.shields.io/badge/agents-Codex%20%7C%20Claude%20Code%20%7C%20WorkBuddy-202124?style=flat-square)
 ![Provider](https://img.shields.io/badge/provider-Right%20Code-2563EB?style=flat-square)
 ![Model](https://img.shields.io/badge/model-gpt--image--2-16A34A?style=flat-square)
 
@@ -14,20 +14,39 @@
 
 ---
 
-## Install
+## Install the Skill
 
-### 1. Install the Skill
+Python 3 is required. If it is missing, ask the current tool to install it.
+
+### Codex
 
 Send this message to Codex:
 
 ```text
-Install this Codex Skill:
+Install this Skill:
 https://github.com/yfpgle-glitch/right-code-imagegen/tree/main/skills/right-code-imagegen
 ```
 
 After installation, start a new Codex task.
 
-### 2. Create an API key
+### Claude Code
+
+Send this message to Claude Code:
+
+```text
+Install this Skill at ~/.claude/skills/right-code-imagegen:
+https://github.com/yfpgle-glitch/right-code-imagegen/tree/main/skills/right-code-imagegen
+```
+
+Restart Claude Code if the current session does not detect it.
+
+### WorkBuddy
+
+1. [Download the Skill archive](https://github.com/yfpgle-glitch/right-code-imagegen/archive/refs/heads/main.zip).
+2. In WorkBuddy, open **Add Skill** and select **Upload Skill**.
+3. Upload the archive you downloaded.
+
+## Create an API key
 
 1. [Register with Right Code](https://www.rightapi.ai/register?aff=9ec111f0) and sign in. (Register through this link to receive 5% extra credit on every top-up.)
 2. Open **Token Management**.
@@ -35,19 +54,19 @@ After installation, start a new Codex task.
 
 For more help, read the [official Right Code API key guide](https://docs.rightapi.ai/docs/rc_quick_start/apikey.html).
 
-### 3. Configure the API key
+## Configure the API key
 
-Tell Codex:
+After installation, tell Codex, Claude Code, or WorkBuddy:
 
 ```text
 Configure my Right Code API key.
 ```
 
-Codex will open a hidden input box. Paste the API key and confirm. The key is hidden while you type.
+The tool will open a hidden input box. Paste the API key and confirm. The key is hidden while you type.
 
 ## Use the Skill
 
-Tell Codex what you want:
+Tell the current tool what you want:
 
 - `Use Right Code to generate a cinematic 16:9 image.`
 - `Use Right Code to edit this image.`

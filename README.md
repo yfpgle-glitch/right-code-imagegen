@@ -2,9 +2,9 @@
 
 # Right Code ImageGen
 
-**在 Codex 中使用 Right Code 生成和修改图片**
+**在 Codex、Claude Code 和 WorkBuddy 中使用 Right Code 生成和修改图片**
 
-![Codex Skill](https://img.shields.io/badge/Codex-Skill-202124?style=flat-square)
+![Agents](https://img.shields.io/badge/agents-Codex%20%7C%20Claude%20Code%20%7C%20WorkBuddy-202124?style=flat-square)
 ![Provider](https://img.shields.io/badge/provider-Right%20Code-2563EB?style=flat-square)
 ![Model](https://img.shields.io/badge/model-gpt--image--2-16A34A?style=flat-square)
 
@@ -14,20 +14,39 @@
 
 ---
 
-## 安装
+## 安装 Skill
 
-### 1. 安装 Skill
+需要 Python 3。没有的话，可以直接让当前工具帮你安装。
+
+### Codex
 
 把这句话发给 Codex：
 
 ```text
-请安装这个 Codex Skill：
+请安装这个 Skill：
 https://github.com/yfpgle-glitch/right-code-imagegen/tree/main/skills/right-code-imagegen
 ```
 
 安装后，新建一个 Codex 任务。
 
-### 2. 创建 API Key
+### Claude Code
+
+把这句话发给 Claude Code：
+
+```text
+请安装这个 Skill 到 ~/.claude/skills/right-code-imagegen：
+https://github.com/yfpgle-glitch/right-code-imagegen/tree/main/skills/right-code-imagegen
+```
+
+如果当前会话没有识别，重新启动 Claude Code。
+
+### WorkBuddy
+
+1. [下载 Skill 压缩包](https://github.com/yfpgle-glitch/right-code-imagegen/archive/refs/heads/main.zip)。
+2. 在 WorkBuddy 中打开“添加技能”，选择“上传技能”。
+3. 上传刚刚下载的压缩包。
+
+## 创建 API Key
 
 1. [注册 Right Code](https://www.rightapi.ai/register?aff=9ec111f0) 并登录。（使用此链接注册，每次充值均可赠送 5% 额外额度。）
 2. 打开“令牌管理”。
@@ -35,19 +54,19 @@ https://github.com/yfpgle-glitch/right-code-imagegen/tree/main/skills/right-code
 
 不知道怎么操作，可以查看 [Right Code 官方 API Key 教程](https://docs.rightapi.ai/docs/rc_quick_start/apikey.html)。
 
-### 3. 配置 API Key
+## 配置 API Key
 
-对 Codex 说：
+安装完成后，对 Codex、Claude Code 或 WorkBuddy 说：
 
 ```text
 帮我配置 Right Code API Key。
 ```
 
-Codex 会打开一个隐藏输入框。粘贴 API Key，然后确认。输入时不会显示 Key。
+工具会打开一个隐藏输入框。粘贴 API Key，然后确认。输入时不会显示 Key。
 
 ## 使用
 
-直接告诉 Codex 你想要什么：
+直接告诉当前工具你想要什么：
 
 - `使用 Right Code 生成一张电影感的 16:9 图片。`
 - `使用 Right Code 修改这张图片。`

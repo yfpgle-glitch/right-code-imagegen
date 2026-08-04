@@ -86,9 +86,74 @@ return text returned of dialogResult
     return completed.stdout
 
 
+def _prompt_with_windows_dialog() -> str:
+    script = r"""
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+
+$form = New-Object System.Windows.Forms.Form
+$form.Text = 'Configure Right Code'
+$form.StartPosition = 'CenterScreen'
+$form.ClientSize = New-Object System.Drawing.Size(520, 150)
+$form.FormBorderStyle = 'FixedDialog'
+$form.MaximizeBox = $false
+$form.MinimizeBox = $false
+
+$label = New-Object System.Windows.Forms.Label
+$label.Text = 'Paste your Right Code API key. It will be saved locally.'
+$label.AutoSize = $true
+$label.Location = New-Object System.Drawing.Point(18, 18)
+$form.Controls.Add($label)
+
+$input = New-Object System.Windows.Forms.TextBox
+$input.Location = New-Object System.Drawing.Point(20, 48)
+$input.Size = New-Object System.Drawing.Size(480, 24)
+$input.UseSystemPasswordChar = $true
+$form.Controls.Add($input)
+
+$save = New-Object System.Windows.Forms.Button
+$save.Text = 'Save'
+$save.DialogResult = [System.Windows.Forms.DialogResult]::OK
+$save.Location = New-Object System.Drawing.Point(344, 94)
+$form.AcceptButton = $save
+$form.Controls.Add($save)
+
+$cancel = New-Object System.Windows.Forms.Button
+$cancel.Text = 'Cancel'
+$cancel.DialogResult = [System.Windows.Forms.DialogResult]::Cancel
+$cancel.Location = New-Object System.Drawing.Point(425, 94)
+$form.CancelButton = $cancel
+$form.Controls.Add($cancel)
+
+$form.Add_Shown({ $input.Select() })
+if ($form.ShowDialog() -ne [System.Windows.Forms.DialogResult]::OK) {
+    exit 1
+}
+[Console]::Out.Write($input.Text)
+"""
+    completed = subprocess.run(
+        [
+            "powershell.exe",
+            "-NoProfile",
+            "-NonInteractive",
+            "-STA",
+            "-Command",
+            script,
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if completed.returncode != 0:
+        raise ConfigurationError("API key configuration was cancelled.")
+    return completed.stdout
+
+
 def prompt_for_api_key() -> str:
     if sys.platform == "darwin":
         return _prompt_with_macos_dialog()
+    if sys.platform == "win32":
+        return _prompt_with_windows_dialog()
     if sys.stdin.isatty():
         return getpass.getpass("Paste your Right Code API key: ")
     raise ConfigurationError(

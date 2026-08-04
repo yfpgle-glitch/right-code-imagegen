@@ -4,6 +4,7 @@ from pathlib import Path
 import stat
 import tempfile
 import unittest
+from unittest import mock
 
 
 TARGET = Path(__file__).resolve().parents[1] / "scripts" / "configure_api_key.py"
@@ -38,6 +39,23 @@ class RightCodeConfigurationTests(unittest.TestCase):
             key_path = Path(temporary) / "missing"
             with self.assertRaisesRegex(CONFIG.ConfigurationError, "No API key"):
                 CONFIG.check_configuration(key_path)
+
+    def test_windows_uses_local_hidden_dialog(self):
+        with mock.patch.object(CONFIG.sys, "platform", "win32"):
+            with mock.patch.object(
+                CONFIG, "_prompt_with_windows_dialog", return_value="secret-test-key"
+            ) as prompt:
+                self.assertEqual(CONFIG.prompt_for_api_key(), "secret-test-key")
+                prompt.assert_called_once_with()
+
+    def test_windows_dialog_keeps_key_out_of_command_arguments(self):
+        completed = mock.Mock(returncode=0, stdout="secret-test-key")
+        with mock.patch.object(CONFIG.subprocess, "run", return_value=completed) as run:
+            self.assertEqual(CONFIG._prompt_with_windows_dialog(), "secret-test-key")
+            command = run.call_args.args[0]
+            self.assertEqual(command[0], "powershell.exe")
+            self.assertIn("-STA", command)
+            self.assertNotIn("secret-test-key", command)
 
 
 if __name__ == "__main__":

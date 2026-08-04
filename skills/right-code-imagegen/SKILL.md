@@ -1,11 +1,13 @@
 ---
 name: right-code-imagegen
-description: Configure a Right Code API key, generate or edit images through Right Code's asynchronous draw API, save original image files locally, and display them in Codex. Use when the user asks to set up or check Right Code authentication, or explicitly requests Right Code, rightapi.ai, right.codes, nano-banana, gpt-image through Right Code, or the Right Code draw endpoint; do not use when the user asks for Codex's built-in image generator or another provider.
+description: Configure a Right Code API key, generate or edit images through Right Code's asynchronous draw API, save original image files locally, and present them in the active AI agent. Use in Codex, Claude Code, or WorkBuddy when the user asks to set up or check Right Code authentication, or explicitly requests Right Code, rightapi.ai, right.codes, nano-banana, gpt-image through Right Code, or the Right Code draw endpoint; do not use when the user asks for the host agent's built-in image generator or another provider.
 ---
 
 # Right Code Image Generation
 
 Use the bundled client for the complete submit, poll, decode, download, and checkpoint flow. Do not rebuild the API sequence with ad-hoc commands.
+
+Choose an available Python 3 launcher for the bundled scripts. Prefer `python3`; use `python` when it points to Python 3. The examples below use `python3`.
 
 Default to model `gpt-image-2`, aspect ratio `16:9`, and resolution `1K` unless the user explicitly requests different values.
 
@@ -14,7 +16,7 @@ Default to model `gpt-image-2`, aspect ratio `16:9`, and resolution `1K` unless 
 When the user asks to configure or check Right Code authentication:
 
 1. If they do not have an account or API key, direct them to `https://www.rightapi.ai/register?aff=9ec111f0`. If they need creation instructions, also provide `https://docs.rightapi.ai/docs/rc_quick_start/apikey.html`; the documented path is Right Code dashboard → Token Management → Create Key.
-2. Do not ask the user to paste the API key into the conversation. Run `python3 scripts/configure_api_key.py`. On macOS this opens a local hidden-input dialog; in an interactive terminal it uses a hidden prompt.
+2. Do not ask the user to paste the API key into the conversation. Run `python3 scripts/configure_api_key.py`. On macOS and Windows this opens a local hidden-input dialog; in another interactive terminal it uses a hidden prompt.
 3. After configuration, run `python3 scripts/configure_api_key.py --check`. Report only the status and saved path. Never print, repeat, log, or embed the key in a command.
 4. Do not make a paid image request merely to verify configuration. Explain that the first real generation is the paid verification step.
 
@@ -25,7 +27,7 @@ When the user asks to configure or check Right Code authentication:
 3. Run `python3 scripts/generate_image.py --help` when options are unclear.
 4. Invoke the script once. Pass each reference image with a separate `--reference` argument. Prefer an ASCII-only output directory inside the current workspace.
    - For multiple output images, pass `--count N`. The client must run `N` independent single-image tasks sequentially; never send provider field `n` greater than `1`.
-5. Read the final JSON from stdout. Present every absolute path in `files` as both an inline Markdown image and a clickable file link.
+5. Read the final JSON from stdout. Present every absolute path in `files` using the host agent's supported artifact or Markdown features. Prefer an inline image plus a clickable local file link; if inline local images are unsupported, provide the saved file path and use the host's preview capability.
 6. If the request fails, diagnose the exact `submit`, `poll`, or `download` stage. Prefer resuming a checkpointed task, reconnecting, polling again, or downloading again because those paths do not create another paid task. Automatically recover with bounded backoff and do not pause for progress confirmation. If no task can be recovered, use the authorization from step 1 for at most three total submit attempts. Only after three failed attempts, an unexpected cost increase, an authentication challenge, or a materially ambiguous request, report the evidence once and ask the user to intervene.
 
 ## Recover an existing task
@@ -60,4 +62,4 @@ For three independent output images, append `--count 3`. This creates three paid
 - Poll the site-level `https://www.rightapi.ai/v1/tasks/{task_id}` endpoint without a `/draw` prefix.
 - Treat a response containing an image URL, `b64_json`, or Gemini inline image as completed even when `status` is absent.
 - Preserve the checkpoint written immediately after submission so a task remains traceable after polling errors.
-- Download the original bytes locally before displaying them. Do not rely on a temporary remote URL as the final Codex result.
+- Download the original bytes locally before displaying them. Do not rely on a temporary remote URL as the final result.

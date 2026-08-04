@@ -1,19 +1,27 @@
-# Right Code ImageGen for Codex
+# Right Code ImageGen Skill for Codex
 
-A standalone Codex plugin for generating and editing images through Right Code's asynchronous image API.
+A standalone Codex Skill for generating and editing images through Right Code's asynchronous image API.
 
-It supports text-to-image, reference-image editing, sequential multi-image requests, resumable polling, local task checkpoints, and original-file downloads. This is an independent community plugin and is not affiliated with Right Code or OpenAI.
+It supports text-to-image, reference-image editing, sequential multi-image requests, resumable polling, local task checkpoints, and original-file downloads. This is an independent community project and is not affiliated with Right Code or OpenAI.
 
 ## Install
 
-Add this repository as a Codex marketplace, then install the plugin:
+Ask Codex to install the Skill from this repository:
 
-```bash
-codex plugin marketplace add yfpgle-glitch/right-code-imagegen
-codex plugin add right-code-imagegen@right-code-imagegen
+```text
+Install the right-code-imagegen Skill from yfpgle-glitch/right-code-imagegen,
+using the path skills/right-code-imagegen.
 ```
 
-Start a new Codex task after installation so the bundled skill is loaded.
+Or install it manually:
+
+```bash
+git clone https://github.com/yfpgle-glitch/right-code-imagegen.git
+mkdir -p ~/.codex/skills
+cp -R right-code-imagegen/skills/right-code-imagegen ~/.codex/skills/right-code-imagegen
+```
+
+Start a new Codex task after installation so the Skill is discovered.
 
 ## Configure the API key
 
@@ -50,11 +58,10 @@ The default model is `gpt-image-2`, the default aspect ratio is `16:9`, and the 
 Run the offline unit tests:
 
 ```bash
-python3 -m unittest discover \
-  plugins/right-code-imagegen/skills/right-code-imagegen/tests
+python3 -m unittest discover skills/right-code-imagegen/tests
 ```
 
-Validate the plugin with Codex's `plugin-creator` validator before publishing a release.
+Validate the Skill with Codex's `skill-creator` validator before publishing a release.
 
 ## License
 

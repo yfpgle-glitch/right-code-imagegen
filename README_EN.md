@@ -4,6 +4,8 @@
 
 Use Right Code to generate or edit images in Codex.
 
+GitHub repository: [yfpgle-glitch/right-code-imagegen](https://github.com/yfpgle-glitch/right-code-imagegen)
+
 ## Install
 
 ### 1. Install the Skill
@@ -11,8 +13,8 @@ Use Right Code to generate or edit images in Codex.
 Send this message to Codex:
 
 ```text
-Install the skills/right-code-imagegen Skill from the GitHub repository
-yfpgle-glitch/right-code-imagegen.
+Install this Codex Skill:
+https://github.com/yfpgle-glitch/right-code-imagegen/tree/main/skills/right-code-imagegen
 ```
 
 After installation, start a new Codex task.
@@ -22,6 +24,8 @@ After installation, start a new Codex task.
 1. [Register with Right Code](https://www.rightapi.ai/register?aff=9ec111f0) and sign in.
 2. Open **Token Management**.
 3. Select **Create Key**.
+
+**Register through this link to receive 5% extra credit on every top-up.**
 
 For more help, read the [official Right Code API key guide](https://docs.rightapi.ai/docs/rc_quick_start/apikey.html).
 
@@ -65,22 +69,3 @@ Tell Codex what you want:
 The defaults are `gpt-image-2`, `16:9`, and `1K`. You can ask for another aspect ratio or resolution.
 
 Each image is submitted separately. Generating several images may result in several charges.
-
-## Manual setup (optional)
-
-You can also run:
-
-```bash
-python3 ~/.codex/skills/right-code-imagegen/scripts/configure_api_key.py
-python3 ~/.codex/skills/right-code-imagegen/scripts/configure_api_key.py --check
-```
-
-## Development
-
-```bash
-python3 -m unittest discover skills/right-code-imagegen/tests
-```
-
-## License
-
-MIT

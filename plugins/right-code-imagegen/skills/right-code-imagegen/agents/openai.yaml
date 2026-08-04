@@ -1,0 +1,4 @@
+interface:
+  display_name: "Right Code Image Generator"
+  short_description: "Generate and display images through Right Code"
+  default_prompt: "Use $right-code-imagegen to generate an image with Right Code and display the saved result."

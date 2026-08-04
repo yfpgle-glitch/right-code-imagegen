@@ -1,0 +1,54 @@
+---
+name: right-code-imagegen
+description: Generate or edit images through Right Code's asynchronous draw API, save the original image files locally, and display them in Codex. Use when the user explicitly asks for Right Code, rightapi.ai, right.codes, nano-banana, gpt-image through Right Code, or the Right Code draw endpoint; do not use when the user asks for Codex's built-in image generator or another provider.
+---
+
+# Right Code Image Generation
+
+Use the bundled client for the complete submit, poll, decode, download, and checkpoint flow. Do not rebuild the API sequence with ad-hoc commands.
+
+Default to model `gpt-image-2`, aspect ratio `16:9`, and resolution `1K` unless the user explicitly requests different values.
+
+## Workflow
+
+1. Verify internally that the user explicitly requested a paid Right Code generation before making a live request. One request authorizes the requested output count and up to three total submit attempts per intended output when recovery is impossible; do not ask again between those attempts.
+2. Read the API key from `RIGHT_CODES_API_KEY` or `~/.config/right-code/api_key`. Never ask the user to paste the key into chat, print it, or embed it in this Skill.
+3. Run `python3 scripts/generate_image.py --help` when options are unclear.
+4. Invoke the script once. Pass each reference image with a separate `--reference` argument. Prefer an ASCII-only output directory inside the current workspace.
+   - For multiple output images, pass `--count N`. The client must run `N` independent single-image tasks sequentially; never send provider field `n` greater than `1`.
+5. Read the final JSON from stdout. Present every absolute path in `files` as both an inline Markdown image and a clickable file link.
+6. If the request fails, diagnose the exact `submit`, `poll`, or `download` stage. Prefer resuming a checkpointed task, reconnecting, polling again, or downloading again because those paths do not create another paid task. Automatically recover with bounded backoff and do not pause for progress confirmation. If no task can be recovered, use the authorization from step 1 for at most three total submit attempts. Only after three failed attempts, an unexpected cost increase, an authentication challenge, or a materially ambiguous request, report the evidence once and ask the user to intervene.
+
+## Recover an existing task
+
+When submission succeeded but polling stopped because of a transient network error, resume the saved task instead of running the generation command again:
+
+```bash
+python3 scripts/generate_image.py \
+  --resume-task-id task_example \
+  --output-dir ./outputs/right-code
+```
+
+Resume mode only sends authenticated `GET` requests to the existing task and never submits a new paid task. Polling retries transient network errors with bounded exponential backoff. Transport-level retries inside one task do not count as new paid attempts. Use `--poll-retries N` to change that limit. Never combine resume mode with `--prompt`, `--reference`, or a `--count` other than 1.
+
+## Example
+
+```bash
+python3 scripts/generate_image.py \
+  --prompt "一只戴着太空头盔的橘猫，电影级光影" \
+  --output-dir ./outputs/right-code
+```
+
+For an edit, append `--reference /absolute/path/reference.png`.
+
+For three independent output images, append `--count 3`. This creates three paid tasks. Later tasks continue even if one task fails, and the final JSON reports `completed`, `failed`, `files`, and per-task details. Recover failed tasks under the three-attempt policy above instead of stopping after each failure.
+
+## Protocol Requirements
+
+- Keep `"async": true` in every submission.
+- Keep provider field `"n": 1`. Right Code accepted larger values in testing but returned only one image, so generate multiple outputs as separate sequential tasks.
+- Submit to `https://www.rightapi.ai/draw/v1/images/generations`.
+- Poll the site-level `https://www.rightapi.ai/v1/tasks/{task_id}` endpoint without a `/draw` prefix.
+- Treat a response containing an image URL, `b64_json`, or Gemini inline image as completed even when `status` is absent.
+- Preserve the checkpoint written immediately after submission so a task remains traceable after polling errors.
+- Download the original bytes locally before displaying them. Do not rely on a temporary remote URL as the final Codex result.

@@ -1,0 +1,38 @@
+{
+  "name": "right-code-imagegen",
+  "version": "0.1.0",
+  "description": "Generate and edit images through Right Code's asynchronous API from Codex.",
+  "author": {
+    "name": "Yifan Pai",
+    "url": "https://github.com/yfpgle-glitch"
+  },
+  "homepage": "https://github.com/yfpgle-glitch/right-code-imagegen",
+  "repository": "https://github.com/yfpgle-glitch/right-code-imagegen",
+  "license": "MIT",
+  "keywords": [
+    "right-code",
+    "rightapi",
+    "image-generation",
+    "image-editing",
+    "gpt-image",
+    "nano-banana"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Right Code ImageGen",
+    "shortDescription": "Generate and edit images through Right Code",
+    "longDescription": "A standalone Right Code image-generation and editing plugin for Codex. It submits asynchronous image tasks, supports reference images and sequential multi-image requests, preserves task checkpoints, resumes interrupted polling, and saves original results locally.",
+    "developerName": "Yifan Pai",
+    "category": "Creativity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use Right Code to generate an image and save the original result.",
+      "Use Right Code to edit the attached reference image.",
+      "Resume an interrupted Right Code task from its task ID."
+    ]
+  }
+}

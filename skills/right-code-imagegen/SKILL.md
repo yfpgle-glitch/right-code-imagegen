@@ -13,7 +13,7 @@ Default to model `gpt-image-2`, aspect ratio `16:9`, and resolution `1K` unless 
 
 When the user asks to configure or check Right Code authentication:
 
-1. If they do not have an account or API key, direct them to `https://www.rightapi.ai/register?aff=9ec111f0`. State that the URL contains an affiliate parameter. Ask them to register and create an API key in Right Code before continuing.
+1. If they do not have an account or API key, direct them to `https://www.rightapi.ai/register?aff=9ec111f0` and state that the URL contains an affiliate parameter. If they need creation instructions, also provide `https://docs.rightapi.ai/docs/rc_quick_start/apikey.html`; the documented path is Right Code dashboard → Token Management → Create Key.
 2. Do not ask the user to paste the API key into the conversation. Run `python3 scripts/configure_api_key.py`. On macOS this opens a local hidden-input dialog; in an interactive terminal it uses a hidden prompt.
 3. After configuration, run `python3 scripts/configure_api_key.py --check`. Report only the status and saved path. Never print, repeat, log, or embed the key in a command.
 4. Do not make a paid image request merely to verify configuration. Explain that the first real generation is the paid verification step.

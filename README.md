@@ -19,7 +19,9 @@ skills/right-code-imagegen 这个 Skill。
 
 [注册 Right Code 并创建 API Key](https://www.rightapi.ai/register?aff=9ec111f0)
 
-> 说明：上面的注册链接包含推广参数。注册后，请在 Right Code 后台创建 API Key。
+不会创建 Key？查看 [Right Code 官方 ApiKey 管理图文教程](https://docs.rightapi.ai/docs/rc_quick_start/apikey.html)。进入后台后，依次点击左侧的“令牌管理”和“创建密钥”。
+
+> 说明：上面的注册链接包含推广参数。创建 Key 时通常保持“可用模型限制”的默认设置；如果不希望套餐用完后继续扣除余额，可以关闭“允许使用余额”。
 
 ### 3. 让 Codex 帮你配置 Key
 

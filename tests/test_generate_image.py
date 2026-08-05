@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import tempfile
 import unittest
+from unittest import mock
 
 
 DEFAULT_TARGET = Path(__file__).resolve().parents[1] / "scripts" / "generate_image.py"
@@ -45,6 +46,16 @@ class FailingSubmitTransport:
         raise CLIENT.RightCodeError("submit failed")
 
 
+class CompletedSubmitTransport:
+    def request_json(self, method, url, api_key, payload=None, stage="request"):
+        encoded = base64.b64encode(b"\x89PNG\r\n\x1a\nmock").decode("ascii")
+        return {
+            "task_id": "task-new",
+            "status": "completed",
+            "data": [{"b64_json": encoded}],
+        }
+
+
 class RightCodeEndpointTests(unittest.TestCase):
     def test_uses_rightapi_submit_and_poll_endpoints(self):
         self.assertEqual(
@@ -56,6 +67,98 @@ class RightCodeEndpointTests(unittest.TestCase):
             "https://www.rightapi.ai/v1/tasks/{task_id}",
         )
         self.assertIn("rightapi.ai", CLIENT.AUTHENTICATED_DOWNLOAD_HOSTS)
+
+
+class RightCodeFilenameTests(unittest.TestCase):
+    def test_new_task_derives_filename_from_prompt(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            with mock.patch.object(
+                CLIENT.time, "strftime", return_value="20260805-091530"
+            ):
+                result = CLIENT.generate(
+                    api_key="test-key",
+                    payload={
+                        "model": "gpt-image-2",
+                        "prompt": "一只可爱的太空猫，电影质感",
+                        "n": 1,
+                        "async": True,
+                    },
+                    output_dir=Path(temporary),
+                    poll_interval=0,
+                    timeout=30,
+                    transport=CompletedSubmitTransport(),
+                    sleep=lambda _: None,
+                    monotonic=lambda: 0,
+                )
+
+            self.assertEqual(
+                Path(result["files"][0]).name,
+                "一只可爱的太空猫-电影质感-20260805-091530-1.png",
+            )
+            checkpoint = json.loads(Path(result["checkpoint"]).read_text())
+            self.assertEqual(checkpoint["filename_stem"], "一只可爱的太空猫-电影质感")
+
+    def test_uses_readable_prompt_name_and_increments_duplicates(self):
+        encoded = base64.b64encode(b"\x89PNG\r\n\x1a\nmock").decode("ascii")
+        values = [
+            ("base64", encoded, "image/png"),
+            ("base64", encoded, "image/png"),
+        ]
+        with tempfile.TemporaryDirectory() as temporary:
+            with mock.patch.object(
+                CLIENT.time, "strftime", return_value="20260805-091530"
+            ):
+                files = CLIENT._save_results(
+                    values=values,
+                    task_id="task-daf57efd7c9c4dfaaa232a3a20e2f1e1",
+                    output_dir=Path(temporary),
+                    api_key="test-key",
+                    transport=object(),
+                    filename_stem="一只可爱的猫咪，穿着宇航服 / 测试.png",
+                )
+
+            self.assertEqual(
+                [Path(path).name for path in files],
+                [
+                    "一只可爱的猫咪-穿着宇航服-测试-20260805-091530-1.png",
+                    "一只可爱的猫咪-穿着宇航服-测试-20260805-091530-2.png",
+                ],
+            )
+
+    def test_resume_reuses_filename_saved_in_checkpoint(self):
+        transport = RecoveringTransport()
+        with tempfile.TemporaryDirectory() as temporary:
+            output_dir = Path(temporary)
+            CLIENT._write_checkpoint(
+                output_dir,
+                "task-existing",
+                "submitted",
+                "gpt-image-2",
+                filename_stem="太空猫",
+            )
+            with mock.patch.object(
+                CLIENT.time, "strftime", return_value="20260805-091530"
+            ):
+                result = CLIENT.resume_task(
+                    api_key="test-key",
+                    task_id="task-existing",
+                    output_dir=output_dir,
+                    poll_interval=0,
+                    timeout=30,
+                    poll_retries=2,
+                    transport=transport,
+                    sleep=lambda _: None,
+                    monotonic=lambda: 0,
+                )
+
+            self.assertEqual(
+                Path(result["files"][0]).name,
+                "太空猫-20260805-091530-1.png",
+            )
+
+    def test_cli_accepts_custom_filename(self):
+        args = CLIENT.parse_args(["--prompt", "cat", "--filename", "太空猫.png"])
+        self.assertEqual(args.filename, "太空猫.png")
 
 
 class RightCodeRecoveryTests(unittest.TestCase):

@@ -23,8 +23,8 @@ Python 3 is required. If it is missing, ask Codex, Claude Code, or WorkBuddy to 
 Send this message to Codex or Claude Code:
 
 ```text
-Install this Skill:
-https://github.com/yfpgle-glitch/right-code-imagegen/tree/main/skills/right-code-imagegen
+Install the root of this repository as a Skill:
+https://github.com/yfpgle-glitch/right-code-imagegen
 ```
 
 After installation, open a new task or session if the Skill is not detected.

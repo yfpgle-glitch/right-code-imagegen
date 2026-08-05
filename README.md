@@ -23,8 +23,8 @@
 把这句话发给 Codex 或 Claude Code：
 
 ```text
-请安装这个 Skill：
-https://github.com/yfpgle-glitch/right-code-imagegen/tree/main/skills/right-code-imagegen
+请把这个仓库根目录作为 Skill 安装：
+https://github.com/yfpgle-glitch/right-code-imagegen
 ```
 
 安装后，如果没有识别，重新打开一个任务或会话。

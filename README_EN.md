@@ -1,6 +1,6 @@
 <div align="center">
 
-# Right Code ImageGen
+# Right Code Image
 
 **Generate and edit images with Right Code in Codex, Claude Code, and WorkBuddy**
 

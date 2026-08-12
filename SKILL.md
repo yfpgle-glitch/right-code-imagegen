@@ -1,9 +1,9 @@
 ---
-name: right-code-imagegen
+name: rightcode-image
 description: Configure a Right Code API key, generate or edit images through Right Code's asynchronous draw API, save original image files locally, and present them in the active AI agent. Use in Codex, Claude Code, or WorkBuddy when the user asks to set up or check Right Code authentication, or explicitly requests Right Code, rightapi.ai, right.codes, nano-banana, gpt-image through Right Code, or the Right Code draw endpoint; do not use when the user asks for the host agent's built-in image generator or another provider.
 ---
 
-# Right Code Image Generation
+# Right Code Image
 
 Use the bundled client for the complete submit, poll, decode, download, and checkpoint flow. Do not rebuild the API sequence with ad-hoc commands.
 
@@ -22,7 +22,7 @@ When the user asks to configure or check Right Code authentication:
 
 ## Workflow
 
-1. Verify internally that the user explicitly requested a paid Right Code generation before making a live request. One request authorizes the requested output count and up to three total submit attempts per intended output when recovery is impossible; do not ask again between those attempts.
+1. Verify internally that the current request explicitly asks for paid image generation and selects Right Code either by name or through an active router whose documented default is Right Code. One request authorizes the requested output count and up to three total submit attempts per intended output when recovery is impossible; do not reuse that authorization for later requests or ask again between authorized recovery attempts.
 2. Read the API key from `RIGHT_CODES_API_KEY` or `~/.config/right-code/api_key`. Never ask the user to paste the key into chat, print it, or embed it in this Skill.
 3. Run `python3 scripts/generate_image.py --help` when options are unclear.
 4. Invoke the script once. Pass each reference image with a separate `--reference` argument. Prefer an ASCII-only output directory inside the current workspace.

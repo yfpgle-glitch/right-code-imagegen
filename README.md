@@ -1,6 +1,6 @@
 <div align="center">
 
-# Right Code ImageGen
+# Right Code Image
 
 **在 Codex、Claude Code 和 WorkBuddy 中使用 Right Code 生成和修改图片**
 

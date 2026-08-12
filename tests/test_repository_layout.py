@@ -9,7 +9,7 @@ class RepositoryLayoutTests(unittest.TestCase):
     def test_skill_entrypoint_is_at_repository_root(self):
         self.assertTrue((ROOT / "SKILL.md").is_file())
         self.assertFalse(
-            (ROOT / "skills" / "right-code-imagegen" / "SKILL.md").exists()
+            (ROOT / "skills" / "rightcode-image" / "SKILL.md").exists()
         )
 
 
